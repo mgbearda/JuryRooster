@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+  <Spelers>
+    <Speler name="Olf Praamstra" 	hasWsince="01-02-2013" />
+    <Speler name="Pjotr Svetachov"	hasWsince="01-11-2011" />
+    <Speler name="Rene Tent"		hasWsince="01-11-2011" />
+    <Speler name="Gjalt Bearda"		hasWsince="01-11-2011" />
+    <Speler name="Henk van Calker"	hasWsince="01-11-2011" />
+    <Speler name="Sven Bloem"		hasWsince="01-02-2013" />
+    <Speler name="Hans Westerhoff" 	hasWsince="01-09-2010" />
+    <Speler name="Balasz Elekes"  	hasWsince="01-02-2013" />
+    <Speler name="Gyorgy Halmos" 	hasWsince="01-02-2013" />
+    <Speler name="Peter Westerhoff" 	hasWsince="01-11-2011" />
+    
+    <Speler name="Richard Jullens"	hasWsince="01-11-2011" />
+    <Speler name="Jan-Willem Stevens"	hasWsince="01-09-2010" />
+    <Speler name="Kees Schouten" 	hasWsince="01-11-2011" />
+    <Speler name="John van Vilsteren" 	hasWsince="01-02-2013" />
+    <Speler name="Leo van Doren" 	hasWsince="01-11-2011" />
+    <Speler name="Marcel van Doren" 	hasWsince="01-11-2011" />
+    <Speler name="Marcel Pranger" 	hasWsince="01-11-2011" />
+    <Speler name="Pim Busker" 		hasWsince="01-02-2013" />
+    <Speler name="Jp Taffijn" 		hasWsince="01-02-2013" />
+    <Speler name="Vincent van der Wijk" hasWsince="01-11-2011" />
+	
+    <Speler name="Danny van der Laan"	hasWsince="01-11-2011" />
+    <Speler name="Arjan Vissink" 	hasWsince="01-11-2011" />
+    <Speler name="Jan Koning" 		hasWsince="01-11-2011" />
+    <Speler name="Herman Trumpie" 	hasWsince="01-11-2011" />
+    <Speler name="Bert Wietze Dijk" 	hasWsince="01-09-2010" />
+    <Speler name="Sipke Meindersma" 	hasWsince="01-02-2013" />
+    <Speler name="Richard Doeven" 	hasWsince="01-02-2013" />
+    <Speler name="Mitchel Menting" 	hasWsince="01-11-2011" />
+    <Speler name="Michiel van Dam" 	hasWsince="01-02-2013" />
+    <Speler name="Ruben Baar" 		hasWsince="01-11-2011" />
+    <Speler name="Niek Kersies" 	hasWsince="01-12-2013" />
+    <Speler name="Robert Dekker"	hasWsince="01-12-2013" />
+    <Speler name="Rene Pieter de Thije"	hasWsince="01-11-2011" />
+    <Speler name="Tom Spiegelaar" 	hasWsince="01-12-2013" />
+	
+    <Speler name="Heleen Alsema"	hasWsince="01-11-2011" />
+    <Speler name="Anja Speelman"	hasWsince="01-11-2011" />
+    <Speler name="Joanne Polling"	hasWsince="01-09-2010" />
+    <Speler name="Marianne Gerdes"	hasWsince="01-02-2013" />
+    <Speler name="Janien Vos"		hasWsince="01-02-2013" />
+    <Speler name="Yvonne de Vries"	hasWsince="01-02-2013" />
+    <Speler name="Marleen Speelman"	hasWsince="01-02-2013" />
+    <Speler name="Ilona Tent"		hasWsince="01-02-2013" />
+    <Speler name="Hieke Niemeijer"	hasWsince="01-02-2013" />
+    <Speler name="Anniek van Dam"	hasWsince="01-02-2013" />
+    <Speler name="Ingeborgh Visscher"	hasWsince="01-02-2013" />
+    <Speler name="Anne "	hasWsince="01-02-2013" />
+
+    <Speler name="Max van Vilsteren"	hasWsince="01-11-2015" />
+    <Speler name="Eva Brals"		hasWsince="01-11-2015" />
+    <Speler name="Joost Hulsegge"	hasWsince="01-11-2015" />
+    <Speler name="Allard Hilbrands"	hasWsince="01-11-2015" />
+    <Speler name="Michel Jurgens" 	hasWsince="01-11-2015" />
+    <Speler name="Bas Kroon" 		hasWsince="01-11-2015" />
+    <Speler name="Judith Iewema" 	hasWsince="01-11-2015" />
+    <Speler name="Arend" 		hasWsince="01-11-2015" />
+    <Speler name="Tom Biggelaar" 	hasWsince="01-11-2015" />
+      
+    <Speler name="Twan Scholtens" 	hasWsince="01-11-2015" />
+    <Speler name="Luka Scholtens" 	hasWsince="01-11-2015" />
+    <Speler name="Yaida Overzet" 	hasWsince="01-11-2015" />
+    <Speler name="Ruben Dekker" 	hasWsince="01-11-2015" />
+    <Speler name="Arden Dekker" 	hasWsince="01-11-2015" />
+    <Speler name="Earendil Dekker" 	hasWsince="01-11-2015" />
+    <Speler name="Aina Dekker" 		hasWsince="01-11-2015" />
+    <Speler name="Bowien Muller" 	hasWsince="01-11-2015" />
+    <Speler name="Amber Spijkman" 	hasWsince="01-11-2015" />
+    <Speler name="Rowen" 		hasWsince="01-11-2015" />
+    <Speler name="Sanne van den Biggelaar"	hasWsince="01-11-2015" />
+  </Spelers>
+  <Teams>
+    <Team name="Heren2" alias="B.RH2C.Ritola Z &amp; PC 2">
+      <Speler name="Richard Jullens"/>
+      <Speler name="Pjotr Svetachov"/>
+      <Speler name="Rene Tent"/>
+      <Speler name="Nico Graver"/>
+      <Speler name="Justin Timmer"/>
+      <Speler name="Gjalt Bearda"/>
+      <Speler name="Henk van Calker"/>
+      <Speler name="Sven Bloem"/>
+      <Speler name="Jan-Willem Stevens"/>
+      <Speler name="Gerhard Polling"/>
+      <Speler name="Rene Pieter de Thije" role="coach"/>
+    </Team>
+	
+    <Team name="Heren1" alias="D1.H1.Ritola Z &amp; PC 1">
+      <Speler name="Kees Schouten"/>
+      <Speler name="Olf"/>
+      <Speler name="John van Vilsteren"/>
+      <Speler name="Leo van Doren"/>
+      <Speler name="Marcel van Doren"/>
+      <Speler name="Marcel Pranger"/>
+      <Speler name="Gerhard Polling" end="20-11-2012"/>
+      <Speler name="Hans Westerhoff"/>
+      <Speler name="Balasz"/>
+	  <Speler name="Pim"/>
+	  <Speler name="Jp"/>
+	  <Speler name="Gyorgy"/>
+	  <Speler name="Vincent van der Wijk"/>
+    </Team>
+	
+    <Team name="Heren3" alias="D1.H4A.Ritola Z &amp; PC 3">
+      <Speler name="Danny van der Laan"/>
+      <Speler name="Arjan Vissink"/>
+      <Speler name="Jan Koning"/>
+      <Speler name="Herman Trumpie"/>
+      <Speler name="Bert Wietze Dijk"/>
+      <Speler name="Sipke Meindersma"/>
+      <Speler name="Martin Koolma"/>
+      <Speler name="Richard Doeven"/>
+      <Speler name="Mitchel Menting"/>
+      <Speler name="Michiel van Dam"/>
+      <Speler name="Ruben Baar"/>
+      <Speler name="Peter Westerhoff"/>
+      <Speler name="Marcel Juistenga"/>
+	  <Speler name="Niek Kersies"/>
+      <Speler name="Robert"/>
+      <Speler name="Rene Pieter de Thije"/>
+      <Speler name="Rik Alsema"/>
+	  <Speler name="Tom Spiegelaar"/>
+    </Team>
+	
+    <Team name="Dames1" alias="D1.D3.Ritola Z &amp; PC 1" >
+      <Speler name="Heleen Alsema"/>
+      <Speler name="Anja Speelman"/>
+      <Speler name="Joanne Polling"/>
+      <Speler name="Marianne Gerdes"/>
+      <Speler name="Janien Vos"/>
+      <Speler name="Yvonne de Vries"/>
+      <Speler name="Marleen Speelman"/>
+      <Speler name="Ilona Tent"/>
+      <Speler name="Hieke Niemeijer"/>
+      <Speler name="Anniek van Dam"/>
+    </Team>
+	
+    <Team name="Aspiranten" alias="D1.BG1A.Ritola Z &amp; PC BG 1" >
+      <Speler name="Max van Vilsteren"/>
+      <Speler name="Eva Brals"/>
+      <Speler name="Joost Hulsegge"/>
+      <Speler name="Allard Hilbrands"/>
+      <Speler name="Michel Jurgens"/>
+      <Speler name="Bas Kroon"/>
+      <Speler name="Judith Iewema"/>
+      <Speler name="Arend"/>
+	  <Speler name="Tom Biggelaar"/>
+      <Speler name="Rene Tent" role="coach"/>
+      <Speler name="John van Vilsteren" role="coach"/>
+    </Team>
+	
+    <Team name="Pupillen" alias="D1.DG2B.Ritola Z &amp; PC DG 1" >
+      <Speler name="Twan Scholtens" />
+      <Speler name="Luka Scholtens" />
+      <Speler name="Yaida Overzet" />
+      <Speler name="Ruben Dekker" />
+      <Speler name="Arden Dekker" />
+	  <Speler name="Earendil Dekker" />
+      <Speler name="Aina Dekker" />
+      <Speler name="Bowien Muller" />
+      <Speler name="Amber Spijkman" />
+      <Speler name="Rowen" />
+      <Speler name="Sanne van den Biggelaar" />
+	  <Speler name="Anja Speelman" role="coach"/>
+	  <Speler name="Joanne Polling" role="coach"/>
+    </Team>
+  </Teams>
+</data>
+
+<!--<Speler name="Nico Graver"				hasWsince="01-11-2011" />-->
+<!--<Speler name="Justin Timmer"		hasWsince="01-09-2010"/>-->
+<Speler name="Martin Koolma" 	hasWsince="01-11-2011" />
+<Speler name="Gerhard Polling" 	hasWsince="01-02-2013" />
+<Speler name="Marcel Juistenga" 	hasWsince="01-02-2013" />
+<Speler name="Rik Alsema" 		hasWsince="01-02-2013" />
