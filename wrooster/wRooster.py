@@ -162,17 +162,17 @@ class Speler:
         self.teams = []
         self.bezigMetWedstrijden = []
         self.thuisWedstrijden = []
-        self.reistijdNaarThuisWedstrijd = 45
+        self.reistijdNaarThuisWedstrijd = 10
         self.jurerenBij = []
         self.score = 0
         self.diffWithMeanScore = 0
-    def addTeam(self, team, startDatum, eindDatum):
-        self.teams.append((team, startDatum, eindDatum))
+    def addTeam(self, team, startDatum, eindDatum, capNr, role):
+        self.teams.append((team, startDatum, eindDatum, capNr, role))
     def verwerkWedstrijdRooster(self):
         global wedstrijden
         global thuisBad
         for w in wedstrijden:
-            for (t, startDatum, eindDatum) in self.teams:
+            for (t, startDatum, eindDatum, capNr, role) in self.teams:
                 if (w.thuis == t and w.aanvang > startDatum and w.aanvang < eindDatum) or (w.uit == t and w.aanvang > startDatum and w.aanvang < eindDatum):
                     self.bezigMetWedstrijden.append((w, w.spelerStartTijd - timedelta(0, t.minutenVoorbespreken*60), w.spelerEindTijd + timedelta(0, t.minutenNabespreken*60)))
                     if (w.locatieCode == thuisBad):
@@ -494,11 +494,11 @@ class State:
         F.write("\n")
         F.write('<h2>Score per persoon</h2>\n')
         F.write("<table border=1>\n")
-        F.write("  <tr><th>Naam</th><th>Score</th><th>Heeft w sinds</th></tr>\n")
+        F.write("  <tr><th>Naam</th><th>Score</th><th>Heeft w sinds</th><th>Reistijd</th></tr>\n")
         sw2 = spelersMetW[:]
         sw2 = sorted(sw2, key=lambda s: s.score)
         for s in sw2:
-            F.write("  <tr><td>%s</td><td>%d</td><td>%s</td></tr>\n" % (s.naam, s.score, date2str(s.heeftWsinds)))
+            F.write("  <tr><td>{naam}</td><td>{score}</td><td>{wstart}</td><td>{reistijd}</td></tr>\n".format(naam=s.naam, score=s.score, wstart=date2str(s.heeftWsinds), reistijd=s.reistijdNaarThuisWedstrijd))
         F.write("</table>\n")
 
         F.write("\n")
@@ -552,6 +552,8 @@ def parseTeamsEnSpelers(fname):
         s = Speler(naam, parseDate(hasWt))
         if (spelerDom.hasAttribute('Wtot')):
             s.heeftWtot = parseDate(spelerDom.getAttribute('Wtot'))
+        if(spelerDom.hasAttribute('reistijdNaarThuisWedstrijd')):
+            s.reistijdNaarThuisWedstrijd = int(spelerDom.getAttribute('reistijdNaarThuisWedstrijd'))
         spelers.append(s)
 
     teamsDom = dom1.getElementsByTagName('Teams')[0].getElementsByTagName('Team')
@@ -574,7 +576,13 @@ def parseTeamsEnSpelers(fname):
             else:
                 nd = parseDate(end)
             s = FindOrAddSpeler(naam)
-            s.addTeam(t, st, nd)
+            capNr = 0
+            if(spelerDom.hasAttribute('capNr')):
+                capNr = int(spelerDom.getAttribute('capNr'))
+            role = 'speler'
+            if(spelerDom.hasAttribute('speler')):
+                role = spelerDom.getAttribute('speler')
+            s.addTeam(t, st, nd, capNr, role)
     return teams, spelers
 
 def parseWedstrijden(fname):
@@ -619,7 +627,7 @@ def printCurrentTeamsAndSpelers():
     for t in teams:
         print t.naam
         for s in spelers:
-            for (st, start, end) in s.teams:
+            for (st, start, end, capNr, role) in s.teams:
                 if st == t and start <= vandaag and end > vandaag:
                     print "\t%s" % s.naam
 
@@ -683,7 +691,7 @@ parseWedstrijden2('2013-2014.csv')
 
 wedstrijden = [w for w in wedstrijden if w.aanvang <= eindDatum]            # alleen wedstrijden voor einddatum
 
-wfile = "wrooster1314.html"
+wfile = "out/wrooster1314.html"
 wedstrijden = sorted(wedstrijden, key=lambda w: w.aanvang)                  # sorteer alle wedstrijden
 for s in spelers:
     s.verwerkWedstrijdRooster()
@@ -714,7 +722,7 @@ for _ in range(nInits):
     currentState.FixJury(FindOrAddSpeler("Pjotr Svetachov"), [ wedstrijden[8] ])
     currentState.FixJury(FindOrAddSpeler("Henk van Calker"), [ wedstrijden[8], wedstrijden[11], wedstrijden[12], wedstrijden[13] ])
     currentState.randomInit()
-    bestState = inproveState(currentState, 5000)
+    bestState = inproveState(currentState, 500)
     if bestState.keerOnmogelijk == 0 and bestState.score < overallBestState.score:
         overallBestState = bestState.clone()
 #overallBestState.printWroosterPerPersoon()

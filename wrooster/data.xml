@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
 	<Spelers> <!-- 2001 heeft officieel geen W! -->
-		<Speler name="Gjalt Bearda"			hasWsince="01-01-2000" />
-		<Speler name="Sven Bloem"			hasWsince="01-01-2000" />
-		<Speler name="Henk van Calker"		hasWsince="01-01-2000" />
-		<Speler name="Balasz Elekes"  		hasWsince="01-09-2015" />
-		<Speler name="Gyorgy Halmos" 		hasWsince="01-01-2001" />
-		<Speler name="Olf Praamstra" 		hasWsince="01-01-2001" />
-		<Speler name="Pjotr Svetachov"		hasWsince="01-01-2000" />
-		<Speler name="Rene Tent"			hasWsince="01-01-2000" />
-		<Speler name="Hans Westerhoff" 		hasWsince="01-01-2000" />
-		<Speler name="Peter Westerhoff" 	hasWsince="01-01-2000" />
+		<Speler name="Gjalt Bearda"			hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="30"/>
+		<Speler name="Sven Bloem"			hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Henk van Calker"		hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Balasz Elekes"  		hasWsince="01-09-2015" reistijdNaarThuisWedstrijd="45" />
+		<Speler name="Gyorgy Halmos" 		hasWsince="01-01-2001" reistijdNaarThuisWedstrijd="30" />
+		<Speler name="Olf Praamstra" 		hasWsince="01-01-2001" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Pjotr Svetachov"		hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="45" />
+		<Speler name="Rene Tent"			hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Hans Westerhoff" 		hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="30" />
+		<Speler name="Peter Westerhoff" 	hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="30" />
 		
-		<Speler name="Pim Busker" 			hasWsince="01-01-2001" />
-		<Speler name="Marcel van Doren" 	hasWsince="01-01-2000" />
-		<Speler name="Leo van Doren" 		hasWsince="01-01-2000" />
-		<Speler name="Richard Jullens"		hasWsince="01-01-2000" />
-		<Speler name="Marcel Pranger" 		hasWsince="01-01-2001" />
-		<Speler name="Kees Schouten" 		hasWsince="01-01-2001" />
-		<Speler name="Jan Willem Stevens"	hasWsince="01-01-2000" />
-		<Speler name="Jean Paul Taffijn" 	hasWsince="01-01-2001" />
-		<Speler name="John van Vilsteren" 	hasWsince="01-01-2000" />
-		<Speler name="Vincent van der Wijk" hasWsince="01-01-2000" />
+		<Speler name="Pim Busker" 			hasWsince="01-01-2001" reistijdNaarThuisWedstrijd="30" />
+		<Speler name="Marcel van Doren" 	hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="30" />
+		<Speler name="Leo van Doren" 		hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="30" />
+		<Speler name="Richard Jullens"		hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Marcel Pranger" 		hasWsince="01-01-2001" reistijdNaarThuisWedstrijd="30" />
+		<Speler name="Kees Schouten" 		hasWsince="01-01-2001" reistijdNaarThuisWedstrijd="30" />
+		<Speler name="Jan Willem Stevens"	hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="30" />
+		<Speler name="Jean Paul Taffijn" 	hasWsince="01-01-2001" reistijdNaarThuisWedstrijd="30" />
+		<Speler name="John van Vilsteren" 	hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="30" />
+		<Speler name="Vincent van der Wijk" hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="10" />
 		
-		<Speler name="Ruben Baar" 			hasWsince="01-09-2015" />
-		<Speler name="Michiel van Dam" 		hasWsince="01-01-2000" />
-		<Speler name="Robert Dekker"		hasWsince="01-01-2001" />
-		<Speler name="Bert Wietze Dijk" 	hasWsince="01-01-2000" />
-		<Speler name="Richard Doeven" 		hasWsince="01-01-2000" />
-		<Speler name="Niek Kersies" 		hasWsince="01-09-2015" />
-		<Speler name="Jan Koning" 			hasWsince="01-01-2000" />
-		<Speler name="Danny van der Laan"	hasWsince="01-01-2000" />
-		<Speler name="Sipke Meindersma" 	hasWsince="01-09-2015" />
-		<Speler name="Mitchel Menting" 		hasWsince="01-09-2015" />
-		<Speler name="Tom Spiegelaar" 		hasWsince="01-09-2015" />
-		<Speler name="Rene Pieter de Thije"	hasWsince="01-01-2000" />
-		<Speler name="Herman Trumpie" 		hasWsince="01-01-2000" />
-		<Speler name="Arjan Vissink" 		hasWsince="01-01-2000" />
+		<Speler name="Ruben Baar" 			hasWsince="01-09-2015" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Michiel van Dam" 		hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Robert Dekker"		hasWsince="01-01-2001" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Bert Wietze Dijk" 	hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Richard Doeven" 		hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Niek Kersies" 		hasWsince="01-09-2015" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Jan Koning" 			hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="30" />
+		<Speler name="Danny van der Laan"	hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Sipke Meindersma" 	hasWsince="01-09-2015" reistijdNaarThuisWedstrijd="30" />
+		<Speler name="Mitchel Menting" 		hasWsince="01-09-2015" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Tom Spiegelaar" 		hasWsince="01-09-2015" reistijdNaarThuisWedstrijd="30" />
+		<Speler name="Rene Pieter de Thije"	hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="45" />
+		<Speler name="Herman Trumpie" 		hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Arjan Vissink" 		hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="30" />
 		
-		<Speler name="Heleen Alsema"		hasWsince="01-01-2000" />
-		<Speler name="Marianne Gerdes"		hasWsince="01-09-2015" />
-		<Speler name="Hieke Niemeijer"		hasWsince="01-01-2001" />
-		<Speler name="Joanne Polling"		hasWsince="01-01-2000" />
-		<Speler name="Anja Speelman"		hasWsince="01-01-2000" />
-		<Speler name="Marleen Speelman"		hasWsince="01-01-2000" />
-		<Speler name="Ilona Tent"			hasWsince="01-01-2000" />
-		<Speler name="Ingeborgh Visscher"	hasWsince="01-01-2001" />
-		<Speler name="Janien Vos"			hasWsince="01-01-2001" />
-		<Speler name="Yvonne de Vries"		hasWsince="01-01-2001" />
-		<Speler name="Anniek van Dam"		hasWsince="01-01-2000" />
-		<Speler name="Anne Hazenberg"		hasWsince="01-09-2015" />
+		<Speler name="Heleen Alsema"		hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Marianne Gerdes"		hasWsince="01-09-2015" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Hieke Niemeijer"		hasWsince="01-01-2001" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Joanne Polling"		hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Anja Speelman"		hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Marleen Speelman"		hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Ilona Tent"			hasWsince="01-01-2000" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Ingeborgh Visscher"	hasWsince="01-01-2001" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Janien Vos"			hasWsince="01-01-2001" reistijdNaarThuisWedstrijd="30" />
+		<Speler name="Yvonne de Vries"		hasWsince="01-01-2001" reistijdNaarThuisWedstrijd="45" />
+		<Speler name="Anniek van Dam"		hasWsince="01-02-2014" reistijdNaarThuisWedstrijd="10" />
+		<Speler name="Anne Hazenberg"		hasWsince="01-09-2015" reistijdNaarThuisWedstrijd="30" />
 
 		<Speler name="Eva Brals"			hasWsince="01-09-2020" />
 		<Speler name="Ruben Dekker" 		hasWsince="01-09-2020" />
@@ -74,29 +74,29 @@
 	</Spelers>
 	<Teams>
 		<Team name="Heren1" alias="N-H1A.Ritola H1">
-			<Speler nr="1" name="Richard Jullens" />
-			<Speler nr="" name="Jan Willem Stevens" />
-			<Speler nr="13" name="Kees Schouten" />
-			<Speler nr="" name="John van Vilsteren" />
-			<Speler nr="" name="Leo van Doren" />
-			<Speler nr="5" name="Marcel van Doren" />
-			<Speler nr="" name="Marcel Pranger" role="captain" />
-			<Speler nr="" name="Pim Busker" />
-			<Speler nr="" name="Jean Paul Taffijn" />
-			<Speler nr="" name="Vincent van der Wijk" />	
+			<Speler capNr="1" name="Richard Jullens" />
+			<Speler capNr="" name="Jan Willem Stevens" />
+			<Speler capNr="13" name="Kees Schouten" />
+			<Speler capNr="" name="John van Vilsteren" />
+			<Speler capNr="" name="Leo van Doren" />
+			<Speler capNr="5" name="Marcel van Doren" />
+			<Speler capNr="" name="Marcel Pranger" role="captain" />
+			<Speler capNr="" name="Pim Busker" />
+			<Speler capNr="" name="Jean Paul Taffijn" />
+			<Speler capNr="" name="Vincent van der Wijk" />	
 		</Team>
 		
 		<Team name="Heren2" alias="B-HRC.Ritola H2">
-			<Speler nr="1" name="Olf Praamstra" />
-			<Speler nr="2" name="Henk van Calker"  role="captain"/>
-			<Speler nr="3" name="Gyorgy Halmos" />
-			<Speler nr="5" name="Gjalt Bearda" />
-			<Speler nr="6" name="Rene Tent" />
-			<Speler nr="7" name="Pjotr Svetachov" />
-			<Speler nr="8" name="Hans Westerhoff" />
-			<Speler nr="9" name="Peter Westerhoff" />	
-			<Speler nr="12" name="Balasz Elekes" />
-			<Speler nr="13" name="Sven Bloem" />
+			<Speler capNr="1" name="Olf Praamstra" />
+			<Speler capNr="2" name="Henk van Calker"  role="captain"/>
+			<Speler capNr="3" name="Gyorgy Halmos" />
+			<Speler capNr="5" name="Gjalt Bearda" />
+			<Speler capNr="6" name="Rene Tent" />
+			<Speler capNr="7" name="Pjotr Svetachov" />
+			<Speler capNr="8" name="Hans Westerhoff" />
+			<Speler capNr="9" name="Peter Westerhoff" />	
+			<Speler capNr="12" name="Balasz Elekes" />
+			<Speler capNr="13" name="Sven Bloem" />
 			<Speler name="Rene Pieter de Thije" role="coach"/>
 		</Team>
 		
