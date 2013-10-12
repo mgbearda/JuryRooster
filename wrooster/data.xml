@@ -1,76 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data>
-	<Spelers>
-		<Speler name="Gjalt Bearda"			hasWsince="01-11-2011" />
-		<Speler name="Sven Bloem"			hasWsince="01-02-2013" />
-		<Speler name="Henk van Calker"		hasWsince="01-11-2011" />
-		<Speler name="Balasz Elekes"  		hasWsince="01-02-2013" />
-		<Speler name="Gyorgy Halmos" 		hasWsince="01-02-2013" />
-		<Speler name="Olf Praamstra" 		hasWsince="01-02-2013" />
-		<Speler name="Pjotr Svetachov"		hasWsince="01-11-2011" />
-		<Speler name="Rene Tent"			hasWsince="01-11-2011" />
-		<Speler name="Hans Westerhoff" 		hasWsince="01-09-2010" />
-		<Speler name="Peter Westerhoff" 	hasWsince="01-11-2011" />
+	<Spelers> <!-- 2001 heeft officieel geen W! -->
+		<Speler name="Gjalt Bearda"			hasWsince="01-01-2000" />
+		<Speler name="Sven Bloem"			hasWsince="01-01-2000" />
+		<Speler name="Henk van Calker"		hasWsince="01-01-2000" />
+		<Speler name="Balasz Elekes"  		hasWsince="01-09-2015" />
+		<Speler name="Gyorgy Halmos" 		hasWsince="01-01-2001" />
+		<Speler name="Olf Praamstra" 		hasWsince="01-01-2001" />
+		<Speler name="Pjotr Svetachov"		hasWsince="01-01-2000" />
+		<Speler name="Rene Tent"			hasWsince="01-01-2000" />
+		<Speler name="Hans Westerhoff" 		hasWsince="01-01-2000" />
+		<Speler name="Peter Westerhoff" 	hasWsince="01-01-2000" />
 		
-		<Speler name="Pim Busker" 			hasWsince="01-02-2013" />
-		<Speler name="Marcel van Doren" 	hasWsince="01-11-2011" />
-		<Speler name="Leo van Doren" 		hasWsince="01-11-2011" />
-		<Speler name="Richard Jullens"		hasWsince="01-11-2011" />
-		<Speler name="Marcel Pranger" 		hasWsince="01-11-2011" />
-		<Speler name="Kees Schouten" 		hasWsince="01-11-2011" />
-		<Speler name="Jan Willem Stevens"	hasWsince="01-09-2010" />
-		<Speler name="Jean Paul Taffijn" 	hasWsince="01-02-2013" />
-		<Speler name="John van Vilsteren" 	hasWsince="01-02-2013" />
-		<Speler name="Vincent van der Wijk" hasWsince="01-11-2011" />
+		<Speler name="Pim Busker" 			hasWsince="01-01-2001" />
+		<Speler name="Marcel van Doren" 	hasWsince="01-01-2000" />
+		<Speler name="Leo van Doren" 		hasWsince="01-01-2000" />
+		<Speler name="Richard Jullens"		hasWsince="01-01-2000" />
+		<Speler name="Marcel Pranger" 		hasWsince="01-01-2001" />
+		<Speler name="Kees Schouten" 		hasWsince="01-01-2001" />
+		<Speler name="Jan Willem Stevens"	hasWsince="01-01-2000" />
+		<Speler name="Jean Paul Taffijn" 	hasWsince="01-01-2001" />
+		<Speler name="John van Vilsteren" 	hasWsince="01-01-2000" />
+		<Speler name="Vincent van der Wijk" hasWsince="01-01-2000" />
 		
-		<Speler name="Ruben Baar" 			hasWsince="01-11-2011" />
-		<Speler name="Michiel van Dam" 		hasWsince="01-02-2013" />
-		<Speler name="Robert Dekker"		hasWsince="01-12-2013" />
-		<Speler name="Bert Wietze Dijk" 	hasWsince="01-09-2010" />
-		<Speler name="Richard Doeven" 		hasWsince="01-02-2013" />
-		<Speler name="Niek Kersies" 		hasWsince="01-12-2013" />
-		<Speler name="Jan Koning" 			hasWsince="01-11-2011" />
-		<Speler name="Danny van der Laan"	hasWsince="01-11-2011" />
-		<Speler name="Sipke Meindersma" 	hasWsince="01-02-2013" />
-		<Speler name="Mitchel Menting" 		hasWsince="01-11-2011" />
-		<Speler name="Tom Spiegelaar" 		hasWsince="01-12-2013" />
-		<Speler name="Rene Pieter de Thije"	hasWsince="01-11-2011" />
-		<Speler name="Herman Trumpie" 		hasWsince="01-11-2011" />
-		<Speler name="Arjan Vissink" 		hasWsince="01-11-2011" />
+		<Speler name="Ruben Baar" 			hasWsince="01-09-2015" />
+		<Speler name="Michiel van Dam" 		hasWsince="01-01-2000" />
+		<Speler name="Robert Dekker"		hasWsince="01-01-2001" />
+		<Speler name="Bert Wietze Dijk" 	hasWsince="01-01-2000" />
+		<Speler name="Richard Doeven" 		hasWsince="01-01-2000" />
+		<Speler name="Niek Kersies" 		hasWsince="01-09-2015" />
+		<Speler name="Jan Koning" 			hasWsince="01-01-2000" />
+		<Speler name="Danny van der Laan"	hasWsince="01-01-2000" />
+		<Speler name="Sipke Meindersma" 	hasWsince="01-09-2015" />
+		<Speler name="Mitchel Menting" 		hasWsince="01-09-2015" />
+		<Speler name="Tom Spiegelaar" 		hasWsince="01-09-2015" />
+		<Speler name="Rene Pieter de Thije"	hasWsince="01-01-2000" />
+		<Speler name="Herman Trumpie" 		hasWsince="01-01-2000" />
+		<Speler name="Arjan Vissink" 		hasWsince="01-01-2000" />
 		
-		<Speler name="Heleen Alsema"		hasWsince="01-11-2011" />
-		<Speler name="Marianne Gerdes"		hasWsince="01-02-2013" />
-		<Speler name="Hieke Niemeijer"		hasWsince="01-02-2013" />
-		<Speler name="Joanne Polling"		hasWsince="01-09-2010" />
-		<Speler name="Anja Speelman"		hasWsince="01-11-2011" />
-		<Speler name="Marleen Speelman"		hasWsince="01-02-2013" />
-		<Speler name="Ilona Tent"			hasWsince="01-02-2013" />
-		<Speler name="Ingeborgh Visscher"	hasWsince="01-02-2013" />
-		<Speler name="Janien Vos"			hasWsince="01-02-2013" />
-		<Speler name="Yvonne de Vries"		hasWsince="01-02-2013" />
-		<Speler name="Anniek van Dam"		hasWsince="01-02-2013" />
-		<Speler name="Anne Hazenberg"		hasWsince="01-02-2015" />
+		<Speler name="Heleen Alsema"		hasWsince="01-01-2000" />
+		<Speler name="Marianne Gerdes"		hasWsince="01-09-2015" />
+		<Speler name="Hieke Niemeijer"		hasWsince="01-01-2001" />
+		<Speler name="Joanne Polling"		hasWsince="01-01-2000" />
+		<Speler name="Anja Speelman"		hasWsince="01-01-2000" />
+		<Speler name="Marleen Speelman"		hasWsince="01-01-2000" />
+		<Speler name="Ilona Tent"			hasWsince="01-01-2000" />
+		<Speler name="Ingeborgh Visscher"	hasWsince="01-01-2001" />
+		<Speler name="Janien Vos"			hasWsince="01-01-2001" />
+		<Speler name="Yvonne de Vries"		hasWsince="01-01-2001" />
+		<Speler name="Anniek van Dam"		hasWsince="01-01-2000" />
+		<Speler name="Anne Hazenberg"		hasWsince="01-09-2015" />
 
-		<Speler name="Eva Brals"			hasWsince="01-11-2015" />
-		<Speler name="Ruben Dekker" 		hasWsince="01-11-2015" />
-		<Speler name="Allard Hilbrands"		hasWsince="01-11-2015" />
-		<Speler name="Joost Hulsegge"		hasWsince="01-11-2015" />
-		<Speler name="Judith Iewema" 		hasWsince="01-11-2015" />
-		<Speler name="Michel Jurgens" 		hasWsince="01-11-2015" />
-		<Speler name="David Loenhout"  	 	hasWsince="01-11-2015" />
-		<Speler name="Yaida Overzet" 		hasWsince="01-11-2015" />
-		<Speler name="Bas Kroon" 			hasWsince="01-11-2015" />
-		<Speler name="Twan Scholtens" 		hasWsince="01-11-2015" />
+		<Speler name="Eva Brals"			hasWsince="01-09-2020" />
+		<Speler name="Ruben Dekker" 		hasWsince="01-09-2020" />
+		<Speler name="Allard Hilbrands"		hasWsince="01-09-2020" />
+		<Speler name="Joost Hulsegge"		hasWsince="01-09-2020" />
+		<Speler name="Judith Iewema" 		hasWsince="01-09-2020" />
+		<Speler name="Michel Jurgens" 		hasWsince="01-09-2020" />
+		<Speler name="David Loenhout"  	 	hasWsince="01-09-2020" />
+		<Speler name="Yaida Overzet" 		hasWsince="01-09-2020" />
+		<Speler name="Bas Kroon" 			hasWsince="01-09-2020" />
+		<Speler name="Twan Scholtens" 		hasWsince="01-09-2020" />
 		
-		<Speler name="Rowen Cuperi" 		hasWsince="01-11-2015" />
-		<Speler name="Arden Dekker" 		hasWsince="01-11-2015" />
-		<Speler name="Aina Dekker" 			hasWsince="01-11-2015" />
-		<Speler name="Earendil Dekker" 		hasWsince="01-11-2015" />
-		<Speler name="Nienke Leiting" 		hasWsince="01-11-2015" />
-		<Speler name="Kjell Mathijssen" 	hasWsince="01-11-2015" />
-		<Speler name="Bowien Muller" 		hasWsince="01-11-2015" />
-		<Speler name="Luka Scholtens" 		hasWsince="01-11-2015" />
-		<Speler name="Imara Verrijp" 		hasWsince="01-11-2015" />
+		<Speler name="Rowen Cuperi" 		hasWsince="01-09-2020" />
+		<Speler name="Arden Dekker" 		hasWsince="01-09-2020" />
+		<Speler name="Aina Dekker" 			hasWsince="01-09-2020" />
+		<Speler name="Earendil Dekker" 		hasWsince="01-09-2020" />
+		<Speler name="Nienke Leiting" 		hasWsince="01-09-2020" />
+		<Speler name="Kjell Mathijssen" 	hasWsince="01-09-2020" />
+		<Speler name="Bowien Muller" 		hasWsince="01-09-2020" />
+		<Speler name="Luka Scholtens" 		hasWsince="01-09-2020" />
+		<Speler name="Imara Verrijp" 		hasWsince="01-09-2020" />
 	</Spelers>
 	<Teams>
 		<Team name="Heren1" alias="D1.H1.Ritola Z &amp; PC 1">
