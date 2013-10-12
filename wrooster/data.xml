@@ -73,34 +73,34 @@
 		<Speler name="Imara Verrijp" 		hasWsince="01-09-2020" />
 	</Spelers>
 	<Teams>
-		<Team name="Heren1" alias="D1.H1.Ritola Z &amp; PC 1">
-			<Speler nr=1 name="Richard Jullens"/>
-			<Speler nr=2 name="Jan Willem Stevens"/>
-			<Speler nr=13 name="Kees Schouten" />
-			<Speler nr=3 name="John van Vilsteren" />
-			<Speler nr=4 name="Leo van Doren" />
-			<Speler nr=5 name="Marcel van Doren" />
-			<Speler nr=6 name="Marcel Pranger" role="captain"/>
-			<Speler nr=7 name="Pim Busker" />
-			<Speler nr=8 name="Jean Paul Taffijn" />
-			<Speler nr=9 name="Vincent van der Wijk" />	
+		<Team name="Heren1" alias="N-H1A.Ritola H1">
+			<Speler nr="1" name="Richard Jullens" />
+			<Speler nr="" name="Jan Willem Stevens" />
+			<Speler nr="13" name="Kees Schouten" />
+			<Speler nr="" name="John van Vilsteren" />
+			<Speler nr="" name="Leo van Doren" />
+			<Speler nr="5" name="Marcel van Doren" />
+			<Speler nr="" name="Marcel Pranger" role="captain" />
+			<Speler nr="" name="Pim Busker" />
+			<Speler nr="" name="Jean Paul Taffijn" />
+			<Speler nr="" name="Vincent van der Wijk" />	
 		</Team>
 		
-		<Team name="Heren2" alias="B.RH2C.Ritola Z &amp; PC 2">
-			<Speler nr=1 name="Olf Praamstra" />
-			<Speler nr=2 name="Henk van Calker"  role="captain"/>
-			<Speler nr=3 name="Gyorgy Halmos" />
-			<Speler nr=5 name="Gjalt Bearda" />
-			<Speler nr=6 name="Rene Tent" />
-			<Speler nr=7 name="Pjotr Svetachov" />
-			<Speler nr=8 name="Hans Westerhoff" />
-			<Speler nr=9 name="Peter Westerhoff" />	
-			<Speler nr=12 name="Balasz Elekes" />
-			<Speler nr=13 name="Sven Bloem" />
+		<Team name="Heren2" alias="B-HRC.Ritola H2">
+			<Speler nr="1" name="Olf Praamstra" />
+			<Speler nr="2" name="Henk van Calker"  role="captain"/>
+			<Speler nr="3" name="Gyorgy Halmos" />
+			<Speler nr="5" name="Gjalt Bearda" />
+			<Speler nr="6" name="Rene Tent" />
+			<Speler nr="7" name="Pjotr Svetachov" />
+			<Speler nr="8" name="Hans Westerhoff" />
+			<Speler nr="9" name="Peter Westerhoff" />	
+			<Speler nr="12" name="Balasz Elekes" />
+			<Speler nr="13" name="Sven Bloem" />
 			<Speler name="Rene Pieter de Thije" role="coach"/>
 		</Team>
 		
-		<Team name="Heren3" alias="D1.H4A.Ritola Z &amp; PC 3">
+		<Team name="Heren3" alias="N-H4A.Ritola H3">
 			<Speler name="Ruben Baar"  role="captain"/>
 			<Speler name="Michiel van Dam" />
 			<Speler name="Robert Dekker" />
@@ -117,7 +117,7 @@
 			<Speler name="Arjan Vissink" />
 		</Team>
 		
-		<Team name="Dames1" alias="D1.D3.Ritola Z &amp; PC 1" >
+		<Team name="Dames1" alias="N-D3A.Ritola D1" >
 			<Speler name="Heleen Alsema"/>
 			<Speler name="Marianne Gerdes"/>
 			<Speler name="Hieke Niemeijer" />
@@ -133,7 +133,7 @@
 			<Speler name="Gerhard Polling" role="coach" />
 		</Team>
 		
-		<Team name="Aspiranten" alias="D1.BG1A.Ritola Z &amp; PC BG 1" >
+		<Team name="Aspiranten" alias="N-BG1B.Ritola ASP" >
 			<Speler name="Eva Brals" />
 			<Speler name="Ruben Dekker" />
 			<Speler name="Allard Hilbrands" />
@@ -147,7 +147,7 @@
 			<Speler name="Janien Vos" role="coach" />
 		</Team>
 		
-		<Team name="Pupillen" alias="D1.DG2B.Ritola Z &amp; PC DG 1" >
+		<Team name="Pupillen" alias="N-DG1B.Ritola PUP" >
 			<Speler name="Rowen Cuperi" />
 			<Speler name="Arden Dekker" />
 			<Speler name="Aina Dekker" />

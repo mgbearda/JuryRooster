@@ -25,49 +25,58 @@ reisminuten = { 'zuidlaren-aqualaren' : 0,
                 'sneek-it rak' : 90,
                 'groningen-de parrel' : 60,
                 'heerenveen-sportstad heerenveen' : 75,
+                'heerenveen-sportstad heerenveen bv' : 75,
                 'delfzijl-dubbelslag' : 75,
                 'drachten-de welle' : 75,
                 'stadskanaal-zwembad pagecentrum' : 75,
+                'stadskanaal-sportfondsenbad stadskanaal' : 75,
                 'zwolle-aabad' : 90,
+                'zwolle-bad bloemendal' : 90,
                 'leeuwarden-de blauwe golf' : 105,
                 'meppel-bad hesselingen' : 90,
                 'beilen-de peppel' : 60,
                 'assen-de bonte wever - assen' : 60,
+                'assen-de bonte wever' : 60,
                 'smilde-de smelte' : 75,
                 'veendam-tropiqua zwemparadijs' : 60,
                 'coevorden-de swaneburg' : 105,
+                'coevorden-sportcomplex de zwanenburg' : 105,
                 'groningen-helperbad' : 45,
+                'joure-zb de stiennen flier' : 90,
                 'joure-de stiennen flier' : 90,
                 'bergum-wetterstins' : 90,
+                'burgum-de wetterstins' : 90,
                 'winschoten-de watertoren' : 75,
                 'hoogezand-kalkwijck' : 45,
+                'hoogezand-de kalkwijck' : 45,
                 'stiens-it gryn' : 120,
                 'franeker-bloemketerp' : 120,
                 'bolsward-vitalo sportfondsenbad' : 105,
                 'bolsward-optisport vitaloo' : 105,
+                'bolsward-vitaloo' : 105,
                 'hoogeveen-de dolfijn' : 75,
-                'emmen-aquarenabad' : 75,
+                'emmen-aquarena' : 75,
                 'dokkum-tolhuisbad' : 105,
                 'rijssen-de koerbelt' : 135,
                 'neede-t spilbroek' : 150
               }
-wedstrijdLengte = { 'D1.BG1A': 45,
-                    'D1.DG2B': 25,
-                    'D1.D3': 45,
-                    'D1.H4A': 45,
-                    'D1.H3': 45,
-                    'D1.H2': 45,
-                    'D1.H1': 60,
-                    'B.RH2C' : 60
+wedstrijdLengte = { 'N-DG1B': 25,
+                    'N-BG1B': 45,
+                    'N-D3A': 45,
+                    'N-H4A': 45,
+                    'N-H3A': 45,
+                    'N-H2A': 45,
+                    'N-H1A': 60,
+                    'B-HRC' : 60
                   }
-juryBenodigd = {    'D1.BG1A': 3,
-                    'D1.DG2B': 2,
-                    'D1.H4A' : 3,
-                    'D1.D3': 3,
-                    'D1.H3': 3,
-                    'D1.H2': 3,
-                    'D1.H1': 3,
-                    'B.RH2C' : 3
+juryBenodigd = {    'N-DG1B': 2,
+                    'N-BG1B': 3,
+                    'N-D3A': 3,
+                    'N-H4A': 3,
+                    'N-H3A': 3,
+                    'N-H2A': 3,
+                    'N-H1A': 3,
+                    'B-HRC' : 3
                   }
 
 def latin1_to_ascii (unitxt):
@@ -86,8 +95,8 @@ def parseDateI(txt): #2011-12-31
     return datetime.datetime.strptime(txt, "%Y-%m-%d")
 def parseDate(txt): #31-12-2011
     return datetime.strptime(txt, "%d-%m-%Y")
-def parseDateTime(txt): #22-10-11 17:30
-    styles = ["%d-%m-%y %H:%M", "%d-%m-%Y %H:%M"]
+def parseDateTime(txt): #22-10-11 17:30 or 10-22-2011 17:30
+    styles = ["%d-%m-%y %H:%M", "%m-%d-%Y %H:%M"]
     for style in styles:
         try:
             d = datetime.strptime(txt, style)
@@ -574,10 +583,30 @@ def parseWedstrijden(fname):
     for lineId, line in enumerate(f):
         if lineId == 0:
             continue
-        (matchId, afd, aanvang, thuisNaam, uitNaam, zwembad, scheidsrechters) = line.split(';') # 7481;D1.DG2C;22-10-11 17:30;De Plons DG 1;Ritola Z & PC DG 1;De Bonte Wever - Assen (Assen );,  ;
-        t1 = FindOrAddTeam(afd + '.' + latin1_to_ascii(thuisNaam), latin1_to_ascii(thuisNaam))
-        t2 = FindOrAddTeam(afd + '.' + latin1_to_ascii(uitNaam), latin1_to_ascii(uitNaam))
+        (matchId, afd, aanvang, thuisNaam, uitNaam, zwembad, scheidsrechters) = latin1_to_ascii(line).split(';') # 7481;D1.DG2C;22-10-11 17:30;De Plons DG 1;Ritola Z & PC DG 1;De Bonte Wever - Assen (Assen );,  ;
+        t1 = FindOrAddTeam(afd + '.' + thuisNaam, thuisNaam)
+        t2 = FindOrAddTeam(afd + '.' + uitNaam, uitNaam)
         w = Wedstrijd(parseDateTime(aanvang), t1, t2, zwembad, afd)
+        nieuweMatch = True
+        for w2 in wedstrijden:
+            if w2.thuis == w.thuis and w2.uit == w.uit and w2.aanvang == w.aanvang:
+                nieuweMatch = False
+        if nieuweMatch:
+            wedstrijden.append(w)
+
+def parseWedstrijden2(fname):
+    global wedstrijden
+    f = open(fname, 'r')
+    for lineId, line in enumerate(f):
+        if lineId == 0:
+            continue
+        (aanvangDatum, aanvangTijd, plaats, zwembad, afd, matchId, thuisNaam, uitNaam) = latin1_to_ascii(line).split(',')
+        uitNaam = uitNaam[:-1] # remove last character : "\n"
+        t1 = FindOrAddTeam(afd + '.' + thuisNaam, thuisNaam)
+        t2 = FindOrAddTeam(afd + '.' + uitNaam, uitNaam)
+        zwembad2 = "{bad} ({plaats})".format(bad=zwembad, plaats=plaats)
+        aanvang = parseDateTime("{datum} {tijd}".format(datum=aanvangDatum, tijd=aanvangTijd))
+        w = Wedstrijd(aanvang, t1, t2, zwembad2, afd)
         nieuweMatch = True
         for w2 in wedstrijden:
             if w2.thuis == w.thuis and w2.uit == w.uit and w2.aanvang == w.aanvang:
@@ -639,6 +668,7 @@ def inproveState(initState, stepsRemain = 1000):
     currentState.printOnmogelijk()
     return currentState
 
+# initialize data
 beginDatum = parseDate("01-10-2013")
 eindDatum = parseDate("01-05-2014")
 thuisBad = 'zuidlaren-aqualaren'
@@ -646,37 +676,14 @@ teams = []
 spelers = []
 wedstrijden = []
 parseTeamsEnSpelers('data.xml')
-state = 'deel2'
-if state == 'deel2':
-    h1 = FindOrAddTeam("Heren2","")
-    h1.minutenVoorbespreken = 15
-    h1.minutenNabespreken = 15
-    #d1 = FindOrAddTeam("Dames1","")
-    #d1.minutenVoorbespreken = 15
-    #d1.minutenNabespreken = 15
-parseWedstrijden('2012-2013-heren1.csv')
-parseWedstrijden('2012-2013-heren2.csv')
-parseWedstrijden('2012-2013-heren3.csv')
-parseWedstrijden('2012-2013-dames1.csv')
-parseWedstrijden('2012-2013-asp1.csv')
-parseWedstrijden('2012-2013-pup1.csv') # laden voor de coaches
-#parseWedstrijden('2011-2012-puptournooi.csv')
-# geen voor / nabespreken eerste maand voor heren 1
+#h1 = FindOrAddTeam("Heren2","")
+#h1.minutenVoorbespreken = 15
+#h1.minutenNabespreken = 15
+parseWedstrijden2('2013-2014.csv')
 
 wedstrijden = [w for w in wedstrijden if w.aanvang <= eindDatum]            # alleen wedstrijden voor einddatum
 
-# JURY part 1
-switchDatum = parseDate("31-10-2012")
-if state == 'deel1':
-    eindDatum = switchDatum
-    #wedstrijden = [w for w in wedstrijden if w.aanvang < switchDatum]
-    wfile = "wrooster1213.html"
-    random.seed(1338)
-else:
-    #beginDatum = switchDatum
-    #wedstrijden = [w for w in wedstrijden if w.aanvang >= switchDatum]
-    wfile = "wrooster1213.html"
-    random.seed(1337)
+wfile = "wrooster1314.html"
 wedstrijden = sorted(wedstrijden, key=lambda w: w.aanvang)                  # sorteer alle wedstrijden
 for s in spelers:
     s.verwerkWedstrijdRooster()
@@ -695,20 +702,17 @@ overallBestState = State()
 nInits = 1
 for _ in range(nInits):
     currentState = State()
-    currentState.FixJury(FindOrAddSpeler("Joanne Polling"), [ wedstrijden[2], wedstrijden[4] ])
-    currentState.FixJury(FindOrAddSpeler("Heleen Alsema"), [ wedstrijden[2], wedstrijden[4] ])
-    currentState.FixJury(FindOrAddSpeler("Anja Speelman"), [ wedstrijden[2], wedstrijden[4] ])
-    currentState.FixJury(FindOrAddSpeler("Herman Trumpie"), [ wedstrijden[3] ])
-    currentState.FixJury(FindOrAddSpeler("Danny van der Laan"), [ wedstrijden[3] ])
-    currentState.FixJury(FindOrAddSpeler("Arjan Vissink"), [ wedstrijden[3] ])
-    currentState.FixJury(FindOrAddSpeler("Justin Timmer"), [ wedstrijden[10], wedstrijden[11], wedstrijden[12], wedstrijden[13] ])
-    currentState.FixJury(FindOrAddSpeler("Nico Graver"), [ wedstrijden[10], wedstrijden[11], wedstrijden[12], wedstrijden[13] ])
-    currentState.FixJury(FindOrAddSpeler("Rene Pieter de Thije"), [ wedstrijden[10], wedstrijden[11], wedstrijden[13] ])
-    currentState.FixJury(FindOrAddSpeler("Marcel van Doren"), [ wedstrijden[12] ])
-    currentState.FixJury(FindOrAddSpeler("Gjalt Bearda"), [ wedstrijden[22], wedstrijden[23], wedstrijden[24], wedstrijden[25] ])
-    currentState.FixJury(FindOrAddSpeler("Pjotr Svetachov"), [ wedstrijden[22], wedstrijden[23], wedstrijden[24], wedstrijden[25] ])
-    currentState.FixJury(FindOrAddSpeler("Henk van Calker"), [ wedstrijden[22], wedstrijden[23], wedstrijden[24], wedstrijden[25] ])
-    currentState.FixJury(FindOrAddSpeler("Anniek van Dam"), [ wedstrijden[88], wedstrijden[89] ])
+    currentState.FixJury(FindOrAddSpeler("Joanne Polling"), [ wedstrijden[4], wedstrijden[11], wedstrijden[12], wedstrijden[13] ])
+    currentState.FixJury(FindOrAddSpeler("Marleen Speelman"), [ wedstrijden[4], wedstrijden[9] ])
+    currentState.FixJury(FindOrAddSpeler("Anja Speelman"), [ wedstrijden[9] ])
+    currentState.FixJury(FindOrAddSpeler("Ilona Tent"), [ wedstrijden[4] ])
+    currentState.FixJury(FindOrAddSpeler("Heleen Alsema"), [ wedstrijden[9] ])
+    currentState.FixJury(FindOrAddSpeler("Vincent van der Wijk"), [ wedstrijden[3] ])
+    currentState.FixJury(FindOrAddSpeler("Marcel van Doren"), [ wedstrijden[3] ])
+    currentState.FixJury(FindOrAddSpeler("Kees Schouten"), [ wedstrijden[3] ])
+    currentState.FixJury(FindOrAddSpeler("Gjalt Bearda"), [ wedstrijden[8], wedstrijden[11], wedstrijden[12], wedstrijden[13] ])
+    currentState.FixJury(FindOrAddSpeler("Pjotr Svetachov"), [ wedstrijden[8] ])
+    currentState.FixJury(FindOrAddSpeler("Henk van Calker"), [ wedstrijden[8], wedstrijden[11], wedstrijden[12], wedstrijden[13] ])
     currentState.randomInit()
     bestState = inproveState(currentState, 5000)
     if bestState.keerOnmogelijk == 0 and bestState.score < overallBestState.score:
@@ -727,20 +731,6 @@ overallBestState.toHTML(wfile)
 #wers = getWersAtDate(datetime(2011,10,30,0,0))
 #for w in wers:
 #    print w.naam
-
-# gjalt
-#gjalt = FindOrAddSpeler("Gjalt Bearda")
-#print "Gjalt's rooster:"
-#gjalt.printWedstrijdRooster()
-# rp
-#rp = FindOrAddSpeler("Rene Pieter de Thije")
-#print "Rene Pieter's rooster:"
-#rp.printWedstrijdRooster()
-
-#jw = FindOrAddSpeler("Jan-Willem Stevens")
-#jw.printJuryRooster()
-#print "---"
-#jw.printWedstrijdRooster()
 
 # team indeling
 #print "----"
