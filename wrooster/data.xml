@@ -75,15 +75,15 @@
 	<Teams>
 		<Team name="Heren1" alias="N-H1A.Ritola H1">
 			<Speler capNr="1" name="Richard Jullens" />
-			<Speler capNr="" name="Jan Willem Stevens" />
-			<Speler capNr="13" name="Kees Schouten" />
-			<Speler capNr="" name="John van Vilsteren" />
-			<Speler capNr="" name="Leo van Doren" />
+			<Speler capNr="2" name="John van Vilsteren" />
+			<Speler capNr="4" name="Marcel Pranger" role="captain" />
 			<Speler capNr="5" name="Marcel van Doren" />
-			<Speler capNr="" name="Marcel Pranger" role="captain" />
-			<Speler capNr="" name="Pim Busker" />
-			<Speler capNr="" name="Jean Paul Taffijn" />
-			<Speler capNr="" name="Vincent van der Wijk" />	
+			<Speler capNr="8" name="Leo van Doren" />
+			<Speler capNr="9" name="Jean Paul Taffijn" />
+			<Speler capNr="10" name="Vincent van der Wijk" />	
+			<Speler capNr="11" name="Jan Willem Stevens" />
+			<Speler capNr="12" name="Pim Busker" />
+			<Speler capNr="13" name="Kees Schouten" />
 		</Team>
 		
 		<Team name="Heren2" alias="B-HRC.Ritola H2">
@@ -118,32 +118,32 @@
 		</Team>
 		
 		<Team name="Dames1" alias="N-D3A.Ritola D1" >
-			<Speler name="Heleen Alsema"/>
+			<Speler capNr="1" name="Heleen Alsema"/>
 			<Speler name="Marianne Gerdes"/>
 			<Speler name="Hieke Niemeijer" />
 			<Speler name="Joanne Polling" role="captain"/>
-			<Speler name="Anja Speelman" />
+			<Speler capNr="2" name="Anja Speelman" />
 			<Speler name="Marleen Speelman" />
 			<Speler name="Ilona Tent" />
 			<Speler name="Ingeborgh Visscher" />
-			<Speler name="Janien Vos" />
+			<Speler capNr="5" name="Janien Vos" />
 			<Speler name="Yvonne de Vries" />
-			<Speler name="Anniek van Dam" />
+			<Speler capNr="13" name="Anniek van Dam" />
 			<Speler name="Anne Hazenberg" />
 			<Speler name="Gerhard Polling" role="coach" />
 		</Team>
 		
 		<Team name="Aspiranten" alias="N-BG1B.Ritola ASP" >
-			<Speler name="Eva Brals" />
-			<Speler name="Ruben Dekker" />
-			<Speler name="Allard Hilbrands" />
-			<Speler name="Joost Hulsegge" />
-			<Speler name="Judith Iewema" />
-			<Speler name="Michel Jurgens" />
-			<Speler name="David Loenhout" />
-			<Speler name="Yaida Overzet" />
-			<Speler name="Bas Kroon" />
-			<Speler name="Twan Scholtens" />
+			<Speler capNr="5" name="Eva Brals" />
+			<Speler capNr="8" name="Ruben Dekker" />
+			<Speler capNr="11" name="Allard Hilbrands" />
+			<Speler capNr="9" name="Joost Hulsegge" />
+			<Speler capNr="3" name="Judith Iewema" />
+			<Speler capNr="1" name="Michel Jurgens" />
+			<Speler capNr="6" name="David Loenhout" />
+			<Speler capNr="" name="Yaida Overzet" />
+			<Speler capNr="" name="Bas Kroon" />
+			<Speler capNr="7" name="Twan Scholtens" />
 			<Speler name="Janien Vos" role="coach" />
 		</Team>
 		
