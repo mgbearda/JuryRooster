@@ -123,11 +123,11 @@ class Team:
         self.minutenNabespreken = 0
 
 class Wedstrijd:
-    def __init__(self, aanvang, thuis, uit, locatie, afd):
-        global thuisBad
+    def __init__(self, aanvang, thuis, uit, locatie, afd, matchId, thuisBad):
         global wedstrijdLengte
         self.aanvang = aanvang
         self.duur = wedstrijdLengte[afd]
+        self.matchId = matchId
         self.afgelopen = aanvang + timedelta(0, self.duur*60-1)
         self.thuis = thuis
         self.uit = uit
@@ -168,9 +168,7 @@ class Speler:
         self.diffWithMeanScore = 0
     def addTeam(self, team, startDatum, eindDatum, capNr, role):
         self.teams.append((team, startDatum, eindDatum, capNr, role))
-    def verwerkWedstrijdRooster(self):
-        global wedstrijden
-        global thuisBad
+    def verwerkWedstrijdRooster(self, wedstrijden, thuisBad):
         for w in wedstrijden:
             for (t, startDatum, eindDatum, capNr, role) in self.teams:
                 if (w.thuis == t and w.aanvang > startDatum and w.aanvang < eindDatum) or (w.uit == t and w.aanvang > startDatum and w.aanvang < eindDatum):
@@ -238,9 +236,7 @@ class Speler:
             print "%s %s %s - %s" % ( time2str(w.aanvang), w.thuis.naam, w.uit.naam)
 
 class State:
-    def __init__(self):
-        global eindDatum
-        global spelersMetW
+    def __init__(self, spelersMetW):
         self.score = sys.maxint
         self.keerOnmogelijk = 0
         self.onmogelijk = []
@@ -254,8 +250,8 @@ class State:
     def FixJury(self, speler, wedstrLst):
         for wedstr in wedstrLst:
             self.fixedJury.append((wedstr, speler))
-    def clone(self):
-        s = State()
+    def clone(self, spelersMetW):
+        s = State(spelersMetW)
         s.score = self.score
         s.keerOnmogelijk = self.keerOnmogelijk
         for (speler, wedstr) in self.onmogelijk:
@@ -269,10 +265,7 @@ class State:
         for (wedstr, speler) in self.fixedJury:
             s.fixedJury.append((wedstr, speler))
         return s
-    def randomInit(self):
-        global thuisWedstrijden
-        global spelers
-        global spelersMetW
+    def randomInit(self, thuisWedstrijden, spelers, spelersMetW, app):
         self.totaalJuryNodig = 0
         for w in thuisWedstrijden:
             self.totaalJuryNodig += w.juryNodig
@@ -286,12 +279,11 @@ class State:
         for w in thuisWedstrijden:
             numJuryNogNodig = w.juryNodig - len(self.juryVoorWedstrijd[w])
             for i in range(numJuryNogNodig):
-                wer = self.getFreeRandomWer(w.juryStartTijd, w.juryEindTijd)
+                wer = self.getFreeRandomWer(w.juryStartTijd, w.juryEindTijd, app)
                 self.juryVoorWedstrijd[w].append(wer)
                 self.wCount[wer] += 1
                 juryPlaatsenGevuld += 1
-    def calculateScore(self):
-        global spelersMetW
+    def calculateScore(self, spelersMetW):
         self.score = 0
         self.keerOnmogelijk = 0
         self.onmogelijk = []
@@ -309,9 +301,8 @@ class State:
             #    self.score += s.diffWithMeanScore
             self.score += math.fabs(s.diffWithMeanScore)
 
-    def getRandomWer(self, juryPlaatsenGevuld):
+    def getRandomWer(self, juryPlaatsenGevuld, spelersMetW):
         # geef random w'er terug met grotere kans als nog weinig keren ingeroosterd is
-        global spelersMetW
         maxCounts = len(spelersMetW) * self.maxKeerWen
         idx = random.randint(0, maxCounts-juryPlaatsenGevuld-1)
         for wer, keer in self.wCount.iteritems():
@@ -319,9 +310,9 @@ class State:
                 return wer
             idx -= (self.maxKeerWen-keer)
         return None
-    def getFreeRandomWer(self, start, end):
+    def getFreeRandomWer(self, start, end, app):
         global onmogelijkScore
-        possibleWers = getWersAtDate(start)
+        possibleWers = app.getWersAtDate(start)
         maxScore = 0
         totalScore = 0
         for w in possibleWers:
@@ -343,9 +334,8 @@ class State:
                         else:
                             break # try new
                 idx -= scoreRemaining
-    def getWerHighScoreHighProb(self):
-        global eindDatum
-        allWers = getWersAtDate(eindDatum)
+    def getWerHighScoreHighProb(self, eindDatum, app):
+        allWers = app.getWersAtDate(eindDatum)
         totalScore = 0
         for wer in allWers:
             totalScore += wer.score
@@ -354,8 +344,8 @@ class State:
             if (randValue < wer.score):
                 return wer
             randValue -= wer.score
-    def getWerLowScoreHighProb(self, datum):
-        allWers = getWersAtDate(datum)
+    def getWerLowScoreHighProb(self, datum, app):
+        allWers = app.getWersAtDate(datum)
         maxScore = 0
         totalScore = 0
         for wer in allWers:
@@ -366,7 +356,7 @@ class State:
             if (randValue < maxScore - wer.score):
                 return wer
             randValue -= maxScore - wer.score
-    def shuffle2Wers(self):
+    def shuffle2Wers(self, eindDatum, app):
         # pick random jury plaats
         if self.keerOnmogelijk > 0:
             randIdx1 = random.randint(0, self.keerOnmogelijk-1)
@@ -375,7 +365,7 @@ class State:
                 if (wedstr == w and werOut == speler):
                     print "FAILED! Probeer fixed jury te verwijderen : %s " % werOut.naam
                     return
-            werIn = self.getFreeRandomWer(w.juryStartTijd, w.juryEindTijd)
+            werIn = self.getFreeRandomWer(w.juryStartTijd, w.juryEindTijd, app)
 
             print "%d: %s vervangt %s" % (randIdx1, werIn.naam, werOut.naam)
 
@@ -391,11 +381,11 @@ class State:
             self.wCount[werOut] -= 1
             self.wCount[werIn] += 1
         else:
-            werOut = self.getWerHighScoreHighProb()
+            werOut = self.getWerHighScoreHighProb(eindDatum, app)
             if (werOut == None):
                 return
             w = werOut.jurerenBij[random.randint(0,len(werOut.jurerenBij)-1)]
-            werIn = self.getWerLowScoreHighProb(w.aanvang)
+            werIn = self.getWerLowScoreHighProb(w.aanvang, app)
             if (werIn == None):
                 return
             for (wedstr, speler) in self.fixedJury:
@@ -443,8 +433,7 @@ class State:
         for  w, jury in wedstr:
             juryTxt = ', '.join([s.naam for s in jury])
             print "%s %s - %s :  %s" % (time2str(w.aanvang), w.thuis.naam, w.uit.naam, juryTxt)
-    def printWroosterPerPersoon(self):
-        global spelersMetW
+    def printWroosterPerPersoon(self, spelersMetW):
         wedstr = []
         for w, jury in self.juryVoorWedstrijd.iteritems():
             wedstr.append((w,jury))
@@ -455,19 +444,16 @@ class State:
                 for j in jury:
                     if j == s:
                         print "\t%s %s - %s" % (time2str(w.aanvang), w.thuis.naam, w.uit.naam)
-    def printScores(self):
-        global spelersMetW
+    def printScores(self, spelersMetW):
         sw2 = spelersMetW[:]
         sw2 = sorted(sw2, key=lambda s: s.score)
         for s in sw2:
             print "%d voor %s (tijd: %s min)" % (s.diffWithMeanScore, s.naam, s.score)
-    def toHTML(self, fname):
-        global spelersMetW
+    def toHTML(self, fname, spelersMetW, wedstrijden):
         wedstr = []
         for w, jury in self.juryVoorWedstrijd.iteritems():
             wedstr.append((w,jury))
         wedstr = sorted(wedstr, key=lambda w: w[0].aanvang)
-        global wedstrijden
 
         F = open(fname,"w")
         F.write('<html>\n')
@@ -521,226 +507,228 @@ class State:
             print "%s bij %s-%s op %s" % (s.naam, w.thuis.naam, w.uit.naam, time2str(w.aanvang))
 
 
-def FindOrAddTeam(alias, teamNaam, printOnCreation = False):
-    global teams
-    for t in teams:
-        if t.naam == alias or t.alias == alias:
-            return t
-    if printOnCreation:
-        print "Onbekend team toegevoegd : %s (%s)" % (teamNaam, alias)
-    t = Team(teamNaam, alias)
-    teams.append(t)
-    return t
+class Application:
+    def __init__(self, seizoenStartJaar, dataFile, wedstrijdenFile):
+        # initialize data
+        self.beginDatum = datetime(seizoenStartJaar , 9, 1)
+        self.eindDatum = datetime(seizoenStartJaar+1, 5, 1)
+        self.thuisBad = 'zuidlaren-aqualaren'
+        self.teams = []
+        self.spelers = []
+        self.wedstrijden = []
 
-def FindOrAddSpeler(spelerNaam, printOnCreation = True):
-    global spelers
-    for s in spelers:
-        if s.naam == spelerNaam:
-            return s
-    if printOnCreation:
-        print "Onbekende speler toegevoegd : %s" % spelerNaam
-    s = Speler(spelerNaam, False)
-    return s
+        self.parseTeamsEnSpelers(dataFile)
+        #self.bespreektijd("Heren2", 15, 15)
+        self.parseWedstrijden2(wedstrijdenFile)
 
-def parseTeamsEnSpelers(fname):
-    global teams, spelers
-    dom1 = parse(fname).getElementsByTagName('data')[0]
-    spelersDom = dom1.getElementsByTagName('Spelers')[0].getElementsByTagName('Speler')
-    for spelerDom in spelersDom:
-        naam = latin1_to_ascii(spelerDom.getAttribute('name'))
-        hasWt = spelerDom.getAttribute('hasWsince')
-        s = Speler(naam, parseDate(hasWt))
-        if (spelerDom.hasAttribute('Wtot')):
-            s.heeftWtot = parseDate(spelerDom.getAttribute('Wtot'))
-        if(spelerDom.hasAttribute('reistijdNaarThuisWedstrijd')):
-            s.reistijdNaarThuisWedstrijd = int(spelerDom.getAttribute('reistijdNaarThuisWedstrijd'))
-        spelers.append(s)
+        self.wedstrijden = [w for w in self.wedstrijden if w.aanvang <= self.eindDatum]            # alleen wedstrijden voor einddatum
 
-    teamsDom = dom1.getElementsByTagName('Teams')[0].getElementsByTagName('Team')
-    for teamDom in teamsDom:
-        naam = teamDom.getAttribute('name')
-        alias = teamDom.getAttribute('alias')
-        t = Team(naam, alias)
-        teams.append(t)
-        teamSpelersDom = teamDom.getElementsByTagName('Speler')
-        for teamSpelerDom in teamSpelersDom:
-            naam = latin1_to_ascii(teamSpelerDom.getAttribute('name'))
-            start = teamSpelerDom.getAttribute('start')
-            end = teamSpelerDom.getAttribute('end')
-            if start=='':
-                st = datetime(2000,1,1)
+        self.wedstrijden = sorted(self.wedstrijden, key=lambda w: w.aanvang)                  # sorteer alle wedstrijden
+        for s in self.spelers:
+            s.verwerkWedstrijdRooster(self.wedstrijden, self.thuisBad)
+        self.thuisWedstrijden = [w for w in self.wedstrijden if w.locatieCode == self.thuisBad]    # lijst van thuis wedstrijden waarvoor jury benodigd is
+        spelersMetWkeys = {}
+        d = self.beginDatum
+        while d < self.eindDatum:
+            wers = self.getWersAtDate(d)
+            for w in wers:
+                spelersMetWkeys[w] = 0
+            d += timedelta(1,0)
+        self.spelersMetW = spelersMetWkeys.keys()
+
+    def FindOrAddTeam(self, alias, teamNaam, printOnCreation = False):
+        for t in self.teams:
+            if t.naam == alias or t.alias == alias:
+                return t
+        if printOnCreation:
+            print "Onbekend team toegevoegd : %s (%s)" % (teamNaam, alias)
+        t = Team(teamNaam, alias)
+        self.teams.append(t)
+        return t
+
+    def FindOrAddSpeler(self, spelerNaam, printOnCreation = True):
+        for s in self.spelers:
+            if s.naam == spelerNaam:
+                return s
+        if printOnCreation:
+            print "Onbekende speler toegevoegd : %s" % spelerNaam
+        self.s = Speler(spelerNaam, False)
+        return s
+
+    def parseTeamsEnSpelers(self, fname):
+        dom1 = parse(fname).getElementsByTagName('data')[0]
+        spelersDom = dom1.getElementsByTagName('Spelers')[0].getElementsByTagName('Speler')
+        for spelerDom in spelersDom:
+            naam = latin1_to_ascii(spelerDom.getAttribute('name'))
+            hasWt = spelerDom.getAttribute('hasWsince')
+            s = Speler(naam, parseDate(hasWt))
+            if (spelerDom.hasAttribute('Wtot')):
+                s.heeftWtot = parseDate(spelerDom.getAttribute('Wtot'))
+            if(spelerDom.hasAttribute('reistijdNaarThuisWedstrijd')):
+                s.reistijdNaarThuisWedstrijd = int(spelerDom.getAttribute('reistijdNaarThuisWedstrijd'))
+            self.spelers.append(s)
+
+        teamsDom = dom1.getElementsByTagName('Teams')[0].getElementsByTagName('Team')
+        for teamDom in teamsDom:
+            naam = teamDom.getAttribute('name')
+            alias = teamDom.getAttribute('alias')
+            t = Team(naam, alias)
+            self.teams.append(t)
+            teamSpelersDom = teamDom.getElementsByTagName('Speler')
+            for teamSpelerDom in teamSpelersDom:
+                naam = latin1_to_ascii(teamSpelerDom.getAttribute('name'))
+                start = teamSpelerDom.getAttribute('start')
+                end = teamSpelerDom.getAttribute('end')
+                if start=='':
+                    st = datetime(2000,1,1)
+                else:
+                    st = parseDate(start)
+                if end=='':
+                    nd = datetime(2030,1,1)
+                else:
+                    nd = parseDate(end)
+                s = self.FindOrAddSpeler(naam)
+                capNr = 0
+                if(spelerDom.hasAttribute('capNr')):
+                    capNr = int(spelerDom.getAttribute('capNr'))
+                role = 'speler'
+                if(spelerDom.hasAttribute('speler')):
+                    role = spelerDom.getAttribute('speler')
+                s.addTeam(t, st, nd, capNr, role)
+
+    def parseWedstrijden(self, fname):
+        f = open(fname, 'r')
+        for lineId, line in enumerate(f):
+            if lineId == 0:
+                continue
+            (matchId, afd, aanvang, thuisNaam, uitNaam, zwembad, scheidsrechters) = latin1_to_ascii(line).split(';') # 7481;D1.DG2C;22-10-11 17:30;De Plons DG 1;Ritola Z & PC DG 1;De Bonte Wever - Assen (Assen );,  ;
+            t1 = FindOrAddTeam(afd + '.' + thuisNaam, thuisNaam)
+            t2 = FindOrAddTeam(afd + '.' + uitNaam, uitNaam)
+            w = Wedstrijd(parseDateTime(aanvang), t1, t2, zwembad, afd, matchId, self.thuisBad)
+            nieuweMatch = True
+            for w2 in self.wedstrijden:
+                if w2.thuis == w.thuis and w2.uit == w.uit and w2.aanvang == w.aanvang:
+                    nieuweMatch = False
+            if nieuweMatch:
+                self.wedstrijden.append(w)
+
+    def parseWedstrijden2(self, fname):
+        f = open(fname, 'r')
+        for lineId, line in enumerate(f):
+            if lineId == 0:
+                continue
+            (aanvangDatum, aanvangTijd, plaats, zwembad, afd, matchId, thuisNaam, uitNaam) = latin1_to_ascii(line).split(',')
+            uitNaam = uitNaam[:-1] # remove last character : "\n"
+            t1 = self.FindOrAddTeam(afd + '.' + thuisNaam, thuisNaam)
+            t2 = self.FindOrAddTeam(afd + '.' + uitNaam, uitNaam)
+            zwembad2 = "{bad} ({plaats})".format(bad=zwembad, plaats=plaats)
+            aanvang = parseDateTime("{datum} {tijd}".format(datum=aanvangDatum, tijd=aanvangTijd))
+            w = Wedstrijd(aanvang, t1, t2, zwembad2, afd, matchId, self.thuisBad)
+            nieuweMatch = True
+            for w2 in self.wedstrijden:
+                if w2.thuis == w.thuis and w2.uit == w.uit and w2.aanvang == w.aanvang:
+                    nieuweMatch = False
+            if nieuweMatch:
+                self.wedstrijden.append(w)
+
+    def printCurrentTeamsAndSpelers(self):
+        vandaag = datetime.today()
+        for t in self.teams:
+            print t.naam
+            for s in spelers:
+                for (st, start, end, capNr, role) in s.teams:
+                    if st == t and start <= vandaag and end > vandaag:
+                        print "\t%s" % s.naam
+
+    def printTeamRoosters(self):
+        for t in self.teams:
+            print t.naam
+            for w in wedstrijden:
+                if w.thuis == t:
+                    print "\t               %s %s" % ( time2str(w.aanvang), w.uit.naam)
+                if w.uit == t:
+                    print "\t%s %s %s" % ( time2str(w.vertrek), time2str(w.aanvang), w.thuis.naam)
+
+    def getWersAtDate(self, date):
+        spelersMetW = []
+        for s in self.spelers:
+            if (s.heeftWsinds <= date and s.heeftWtot > date):
+                spelersMetW.append(s)
+        return spelersMetW
+
+    def inproveState(self, initState, stepsRemain = 1000):
+        currentState = initState
+        currentState.calculateScore(self.spelersMetW)
+        nWersToUpdate = 1
+        global onmogelijkScore
+        tempFactor = 0.0000005 # float(onmogelijkScore/150)
+        while stepsRemain > 0:
+            updatedState = currentState.clone(self.spelersMetW)
+            updatedState.calculateScore(self.spelersMetW)
+            if nWersToUpdate > 0:
+                updatedState.shuffle2Wers(self.eindDatum, self)
+            updatedState.calculateScore(self.spelersMetW)
+            ht = math.log(2.0)/(stepsRemain*tempFactor)
+            print "%05d : [%d met %d onm] vs [%d met %d onm] stephalf : %4.2f " % (stepsRemain, currentState.score, currentState.keerOnmogelijk, updatedState.score, updatedState.keerOnmogelijk, ht)
+            if updatedState.score <= currentState.score: # or updatedState.keerOnmogelijk < currentState.keerOnmogelijk:
+                currentState = updatedState.clone(self.spelersMetW)
             else:
-                st = parseDate(start)
-            if end=='':
-                nd = datetime(2030,1,1)
-            else:
-                nd = parseDate(end)
-            s = FindOrAddSpeler(naam)
-            capNr = 0
-            if(spelerDom.hasAttribute('capNr')):
-                capNr = int(spelerDom.getAttribute('capNr'))
-            role = 'speler'
-            if(spelerDom.hasAttribute('speler')):
-                role = spelerDom.getAttribute('speler')
-            s.addTeam(t, st, nd, capNr, role)
-    return teams, spelers
+                r = random.random()
+                us = updatedState.score
+                cs = currentState.score
+                dif = us+1-cs
+                temp = math.exp(-float(dif)/(stepsRemain*tempFactor))
+                if temp > r: # and updatedState.keerOnmogelijk < currentState.keerOnmogelijk:
+                    currentState = updatedState.clone(self.spelersMetW)
+            stepsRemain -= 1
+            del updatedState
+        currentState.printOnmogelijk()
+        return currentState
 
-def parseWedstrijden(fname):
-    global wedstrijden
-    f = open(fname, 'r')
-    for lineId, line in enumerate(f):
-        if lineId == 0:
-            continue
-        (matchId, afd, aanvang, thuisNaam, uitNaam, zwembad, scheidsrechters) = latin1_to_ascii(line).split(';') # 7481;D1.DG2C;22-10-11 17:30;De Plons DG 1;Ritola Z & PC DG 1;De Bonte Wever - Assen (Assen );,  ;
-        t1 = FindOrAddTeam(afd + '.' + thuisNaam, thuisNaam)
-        t2 = FindOrAddTeam(afd + '.' + uitNaam, uitNaam)
-        w = Wedstrijd(parseDateTime(aanvang), t1, t2, zwembad, afd)
-        nieuweMatch = True
-        for w2 in wedstrijden:
-            if w2.thuis == w.thuis and w2.uit == w.uit and w2.aanvang == w.aanvang:
-                nieuweMatch = False
-        if nieuweMatch:
-            wedstrijden.append(w)
+    def bespreektijd(self, teamnaam, voorMinuten, naMinuten):
+        t = FindOrAddTeam(teamnaam, "")
+        t.minutenVoorbespreken = voorMinuten
+        t.minutenNabespreken = naMinuten
 
-def parseWedstrijden2(fname):
-    global wedstrijden
-    f = open(fname, 'r')
-    for lineId, line in enumerate(f):
-        if lineId == 0:
-            continue
-        (aanvangDatum, aanvangTijd, plaats, zwembad, afd, matchId, thuisNaam, uitNaam) = latin1_to_ascii(line).split(',')
-        uitNaam = uitNaam[:-1] # remove last character : "\n"
-        t1 = FindOrAddTeam(afd + '.' + thuisNaam, thuisNaam)
-        t2 = FindOrAddTeam(afd + '.' + uitNaam, uitNaam)
-        zwembad2 = "{bad} ({plaats})".format(bad=zwembad, plaats=plaats)
-        aanvang = parseDateTime("{datum} {tijd}".format(datum=aanvangDatum, tijd=aanvangTijd))
-        w = Wedstrijd(aanvang, t1, t2, zwembad2, afd)
-        nieuweMatch = True
-        for w2 in wedstrijden:
-            if w2.thuis == w.thuis and w2.uit == w.uit and w2.aanvang == w.aanvang:
-                nieuweMatch = False
-        if nieuweMatch:
-            wedstrijden.append(w)
+    def generateRooster(self, nInits = 1, nIters = 5000):
+        self.overallBestState = State(self.spelersMetW)
+        for _ in range(nInits):
+            currentState = State(self.spelersMetW)
+            currentState.FixJury(self.FindOrAddSpeler("Joanne Polling"), [ self.wedstrijden[4], self.wedstrijden[11], self.wedstrijden[12], self.wedstrijden[13] ])
+            currentState.FixJury(self.FindOrAddSpeler("Marleen Speelman"), [ self.wedstrijden[4], self.wedstrijden[9] ])
+            currentState.FixJury(self.FindOrAddSpeler("Anja Speelman"), [ self.wedstrijden[9] ])
+            currentState.FixJury(self.FindOrAddSpeler("Ilona Tent"), [ self.wedstrijden[4] ])
+            currentState.FixJury(self.FindOrAddSpeler("Heleen Alsema"), [ self.wedstrijden[9] ])
+            currentState.FixJury(self.FindOrAddSpeler("Vincent van der Wijk"), [ self.wedstrijden[3] ])
+            currentState.FixJury(self.FindOrAddSpeler("Marcel van Doren"), [ self.wedstrijden[3] ])
+            currentState.FixJury(self.FindOrAddSpeler("Kees Schouten"), [ self.wedstrijden[3] ])
+            currentState.FixJury(self.FindOrAddSpeler("Gjalt Bearda"), [ self.wedstrijden[8], self.wedstrijden[11], self.wedstrijden[12], self.wedstrijden[13] ])
+            currentState.FixJury(self.FindOrAddSpeler("Pjotr Svetachov"), [ self.wedstrijden[8] ])
+            currentState.FixJury(self.FindOrAddSpeler("Henk van Calker"), [ self.wedstrijden[8], self.wedstrijden[11], self.wedstrijden[12], self.wedstrijden[13] ])
+            currentState.randomInit(self.thuisWedstrijden, self.spelers, self.spelersMetW, self)
+            bestState = self.inproveState(currentState, nIters)
+            if bestState.keerOnmogelijk == 0 and bestState.score < self.overallBestState.score:
+                self.overallBestState = bestState.clone(self.spelersMetW)
 
-def printCurrentTeamsAndSpelers():
-    vandaag = datetime.today()
-    for t in teams:
-        print t.naam
-        for s in spelers:
-            for (st, start, end, capNr, role) in s.teams:
-                if st == t and start <= vandaag and end > vandaag:
-                    print "\t%s" % s.naam
+    def readJuryRooster(self, filename):
+        pass
 
-def printTeamRoosters():
-    for t in teams:
-        print t.naam
-        for w in wedstrijden:
-            if w.thuis == t:
-                print "\t               %s %s" % ( time2str(w.aanvang), w.uit.naam)
-            if w.uit == t:
-                print "\t%s %s %s" % ( time2str(w.vertrek), time2str(w.aanvang), w.thuis.naam)
+    def writeJuryRooster(self, filename):
+        pass
+        self.spelersMetW = sorted(self.spelersMetW, key=lambda s: s.naam)
 
-def getWersAtDate(date):
-    spelersMetW = []
-    for s in spelers:
-        if (s.heeftWsinds <= date and s.heeftWtot > date):
-            spelersMetW.append(s)
-    return spelersMetW
+    def writeResults(self, wfile):
+        #overallBestState.printWroosterPerPersoon(self.spelersMetW)
+        #overallBestState.printWroosterPerWedstrijd()
+        print "------best state--------"
+        self.overallBestState.calculateScore(self.spelersMetW)
+        self.overallBestState.printScores(self.spelersMetW)
+        print "------onmogelijk in best state ----------"
+        self.overallBestState.printOnmogelijk()
+        self.overallBestState.toHTML(wfile, self.spelersMetW, self.wedstrijden)
 
-def inproveState(initState, stepsRemain = 1000):
-    currentState = initState
-    currentState.calculateScore()
-    nWersToUpdate = 1
-    global onmogelijkScore
-    tempFactor = 0.0000005 # float(onmogelijkScore/150)
-    while stepsRemain > 0:
-        updatedState = currentState.clone()
-        updatedState.calculateScore()
-        if _ in range(nWersToUpdate):
-            updatedState.shuffle2Wers()
-        updatedState.calculateScore()
-        ht = math.log(2.0)/(stepsRemain*tempFactor)
-        print "%05d : [%d met %d onm] vs [%d met %d onm] stephalf : %4.2f " % (stepsRemain, currentState.score, currentState.keerOnmogelijk, updatedState.score, updatedState.keerOnmogelijk, ht)
-        if updatedState.score <= currentState.score: # or updatedState.keerOnmogelijk < currentState.keerOnmogelijk:
-            currentState = updatedState.clone()
-        else:
-            r = random.random()
-            us = updatedState.score
-            cs = currentState.score
-            dif = us+1-cs
-            temp = math.exp(-float(dif)/(stepsRemain*tempFactor))
-            if temp > r: # and updatedState.keerOnmogelijk < currentState.keerOnmogelijk:
-                currentState = updatedState.clone()
-        stepsRemain -= 1
-        del updatedState
-    currentState.printOnmogelijk()
-    return currentState
-
-# initialize data
-beginDatum = parseDate("01-10-2013")
-eindDatum = parseDate("01-05-2014")
-thuisBad = 'zuidlaren-aqualaren'
-teams = []
-spelers = []
-wedstrijden = []
-parseTeamsEnSpelers('data.xml')
-#h1 = FindOrAddTeam("Heren2","")
-#h1.minutenVoorbespreken = 15
-#h1.minutenNabespreken = 15
-parseWedstrijden2('2013-2014.csv')
-
-wedstrijden = [w for w in wedstrijden if w.aanvang <= eindDatum]            # alleen wedstrijden voor einddatum
-
-wfile = "out/wrooster1314.html"
-wedstrijden = sorted(wedstrijden, key=lambda w: w.aanvang)                  # sorteer alle wedstrijden
-for s in spelers:
-    s.verwerkWedstrijdRooster()
-thuisWedstrijden = [w for w in wedstrijden if w.locatieCode == thuisBad]    # lijst van thuis wedstrijden waarvoor jury benodigd is
-spelersMetWk = {}
-d = beginDatum
-while d < eindDatum:
-    wers = getWersAtDate(d)
-    for w in wers:
-        spelersMetWk[w] = 0
-    d += timedelta(1,0)
-spelersMetW = spelersMetWk.keys()
-spelersMetW = sorted(spelersMetW, key=lambda s: s.naam)
-
-overallBestState = State()
-nInits = 1
-for _ in range(nInits):
-    currentState = State()
-    currentState.FixJury(FindOrAddSpeler("Joanne Polling"), [ wedstrijden[4], wedstrijden[11], wedstrijden[12], wedstrijden[13] ])
-    currentState.FixJury(FindOrAddSpeler("Marleen Speelman"), [ wedstrijden[4], wedstrijden[9] ])
-    currentState.FixJury(FindOrAddSpeler("Anja Speelman"), [ wedstrijden[9] ])
-    currentState.FixJury(FindOrAddSpeler("Ilona Tent"), [ wedstrijden[4] ])
-    currentState.FixJury(FindOrAddSpeler("Heleen Alsema"), [ wedstrijden[9] ])
-    currentState.FixJury(FindOrAddSpeler("Vincent van der Wijk"), [ wedstrijden[3] ])
-    currentState.FixJury(FindOrAddSpeler("Marcel van Doren"), [ wedstrijden[3] ])
-    currentState.FixJury(FindOrAddSpeler("Kees Schouten"), [ wedstrijden[3] ])
-    currentState.FixJury(FindOrAddSpeler("Gjalt Bearda"), [ wedstrijden[8], wedstrijden[11], wedstrijden[12], wedstrijden[13] ])
-    currentState.FixJury(FindOrAddSpeler("Pjotr Svetachov"), [ wedstrijden[8] ])
-    currentState.FixJury(FindOrAddSpeler("Henk van Calker"), [ wedstrijden[8], wedstrijden[11], wedstrijden[12], wedstrijden[13] ])
-    currentState.randomInit()
-    bestState = inproveState(currentState, 500)
-    if bestState.keerOnmogelijk == 0 and bestState.score < overallBestState.score:
-        overallBestState = bestState.clone()
-#overallBestState.printWroosterPerPersoon()
-#overallBestState.printWroosterPerWedstrijd()
-print "------best state--------"
-gjalt = FindOrAddSpeler("Gjalt Bearda")
-gjalt.calculateMyScore(overallBestState)
-overallBestState.calculateScore()
-overallBestState.printScores()
-print "------onmogelijk in best state ----------"
-overallBestState.printOnmogelijk()
-overallBestState.toHTML(wfile)
-
-#wers = getWersAtDate(datetime(2011,10,30,0,0))
-#for w in wers:
-#    print w.naam
-
-# team indeling
-#print "----"
-#printCurrentTeamsAndSpelers()
-#printTeamRoosters()
+app = Application(2013, 'data.xml', '2013-2014.csv')
+#app.readJuryRooster('data/rooster.csv')
+app.generateRooster(1, 5000)
+#app.writeJuryRooster('data/rooster.csv')
+app.writeResults('out/wrooter.html')
