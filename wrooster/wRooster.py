@@ -506,6 +506,66 @@ class State:
         for s,w in self.onmogelijk:
             print "%s bij %s-%s op %s" % (s.naam, w.thuis.naam, w.uit.naam, time2str(w.aanvang))
 
+    def Read(self, filename, app):
+        stateNode = parse(filename).getElementsByTagName('state')[0]
+        self.score = float(stateNode.getAttribute('score'))
+        self.keerOnmogelijk = int(stateNode.getAttribute('keerOnmogelijk'))
+        self.totaalJuryNodig = int(stateNode.getAttribute('totaalJuryNodig'))
+        self.maxKeerWen = int(stateNode.getAttribute('maxKeerWen'))
+        wedstrDOMs = stateNode.getElementsByTagName('wedstr')
+        for wedstrDOM in wedstrDOMs:
+            matchId = wedstrDOM.getAttribute('id')
+            wedstr = app.GetWedstrijd(matchId)
+            self.juryVoorWedstrijd[wedstr] = []
+            juryDOMs = wedstrDOM.getElementsByTagName('jury')
+            for juryDOM in juryDOMs:
+                name = latin1_to_ascii(juryDOM.getAttribute('name'))
+                j = app.FindOrAddSpeler(name)
+                self.juryVoorWedstrijd[wedstr].append(j)
+        onmogelijkDOMs = stateNode.getElementsByTagName('onmogelijk')
+        for onmogelijkDOM in onmogelijkDOMs:
+            matchId = onmogelijkDOM.getAttribute('wedstrId')
+            wedstr = app.GetWedstrijd(matchId)
+            name = latin1_to_ascii(onmogelijkDOM.getAttribute('juryName'))
+            jury = app.FindOrAddSpeler(name)
+            self.onmogelijk.append((jury, wedstr))
+        wCountDOMs = stateNode.getElementsByTagName('wcount')
+        for wCountDOM in wCountDOMs:
+            name = latin1_to_ascii(wCountDOM.getAttribute('juryName'))
+            jury = app.FindOrAddSpeler(name)
+            cnt = int(wCountDOM.getAttribute('count'))
+            self.wCount[jury] = cnt
+        fixedJuryDOMs = stateNode.getElementsByTagName('fixedJury')
+        for fixedJuryDOM in fixedJuryDOMs:
+            matchId = fixedJuryDOM.getAttribute('wedstrId')
+            wedstr = app.GetWedstrijd(matchId)
+            name = latin1_to_ascii(fixedJuryDOM.getAttribute('juryName'))
+            jury = app.FindOrAddSpeler(name)
+            self.fixedJuryDOM.append((wedstr, jury))
+
+    def Write(self, filename):
+        wedstr = []
+        for w, jury in self.juryVoorWedstrijd.iteritems():
+            wedstr.append((w,jury))
+        wedstr = sorted(wedstr, key=lambda w: w[0].aanvang)
+
+        F = open(filename,"w")
+        F.write('<state score="{score}" keerOnmogelijk="{onmogelijk}" totaalJuryNodig="{juryNodig}" maxKeerWen="{maxKeerWen}" >\n'.format(
+                    score=self.score, onmogelijk=self.keerOnmogelijk, juryNodig=self.totaalJuryNodig, maxKeerWen=self.maxKeerWen
+        ))
+        for  w, jury in wedstr:
+            F.write('  <wedstr id="{id}">\n'.format(id=w.matchId))
+            for j in jury:
+                F.write('    <jury name="{naam}" />\n'.format(naam= j.naam))
+            F.write('  </wedstr>\n')
+        for speler, wedstr in self.onmogelijk:
+            F.write('  <onmogelijk juryName="{naam}" wedstrId="{id}">\n'.format(naam=speler.naam, id=wedstr.matchId))
+        for speler, cnt in self.wCount.iteritems():
+            F.write('  <wcount juryName="{naam}" count="{cnt}">\n'.format(naam=speler.naam, cnt=cnt))
+        for (wedstr, speler) in self.fixedJury:
+            F.write('  <fixedJury juryName="{naam}" wedstrId="{id}">\n'.format(naam=speler.naam, id=wedstr.matchId))
+        F.write('</state>\n')
+        F.close()
 
 class Application:
     def __init__(self, seizoenStartJaar, dataFile, wedstrijdenFile):
@@ -552,8 +612,16 @@ class Application:
                 return s
         if printOnCreation:
             print "Onbekende speler toegevoegd : %s" % spelerNaam
-        self.s = Speler(spelerNaam, False)
+        s = Speler(spelerNaam, self.eindDatum)
+        self.spelers.append(s)
         return s
+
+    def GetWedstrijd(self, matchId):
+        for w in self.wedstrijden:
+            if w.matchId == matchId:
+                return w
+        print "Onbekende wedstrijd nummer: {nr}".format(nr=matchId)
+        return 0
 
     def parseTeamsEnSpelers(self, fname):
         dom1 = parse(fname).getElementsByTagName('data')[0]
@@ -710,14 +778,14 @@ class Application:
             if bestState.keerOnmogelijk == 0 and bestState.score < self.overallBestState.score:
                 self.overallBestState = bestState.clone(self.spelersMetW)
 
-    def readJuryRooster(self, filename):
-        pass
+    def readState(self, filename):
+        self.overallBestState = State().Read(filename, self)
 
-    def writeJuryRooster(self, filename):
-        pass
-        self.spelersMetW = sorted(self.spelersMetW, key=lambda s: s.naam)
+    def writeState(self, filename):
+        self.overallBestState.Write(filename)
 
     def writeResults(self, wfile):
+        #self.spelersMetW = sorted(self.spelersMetW, key=lambda s: s.naam)
         #overallBestState.printWroosterPerPersoon(self.spelersMetW)
         #overallBestState.printWroosterPerWedstrijd()
         print "------best state--------"
@@ -728,7 +796,7 @@ class Application:
         self.overallBestState.toHTML(wfile, self.spelersMetW, self.wedstrijden)
 
 app = Application(2013, 'data.xml', '2013-2014.csv')
-#app.readJuryRooster('data/rooster.csv')
-app.generateRooster(1, 5000)
-#app.writeJuryRooster('data/rooster.csv')
+#app.readState('data/rooster.csv')
+app.generateRooster(1, 50)
+app.writeState('out/state.csv')
 app.writeResults('out/wrooter.html')
