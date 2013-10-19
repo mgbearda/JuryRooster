@@ -265,6 +265,7 @@ class State:
         for (wedstr, speler) in self.fixedJury:
             s.fixedJury.append((wedstr, speler))
         return s
+
     def randomInit(self, thuisWedstrijden, spelers, spelersMetW, app):
         self.totaalJuryNodig = 0
         for w in thuisWedstrijden:
@@ -283,6 +284,7 @@ class State:
                 self.juryVoorWedstrijd[w].append(wer)
                 self.wCount[wer] += 1
                 juryPlaatsenGevuld += 1
+
     def calculateScore(self, spelersMetW):
         self.score = 0
         self.keerOnmogelijk = 0
@@ -541,14 +543,13 @@ class State:
             wedstr = app.GetWedstrijd(matchId)
             name = latin1_to_ascii(fixedJuryDOM.getAttribute('juryName'))
             jury = app.FindOrAddSpeler(name)
-            self.fixedJuryDOM.append((wedstr, jury))
+            self.fixedJury.append((wedstr, jury))
 
     def Write(self, filename):
         wedstr = []
         for w, jury in self.juryVoorWedstrijd.iteritems():
             wedstr.append((w,jury))
         wedstr = sorted(wedstr, key=lambda w: w[0].aanvang)
-
         F = open(filename,"w")
         F.write('<state score="{score}" keerOnmogelijk="{onmogelijk}" totaalJuryNodig="{juryNodig}" maxKeerWen="{maxKeerWen}" >\n'.format(
                     score=self.score, onmogelijk=self.keerOnmogelijk, juryNodig=self.totaalJuryNodig, maxKeerWen=self.maxKeerWen
@@ -559,11 +560,11 @@ class State:
                 F.write('    <jury name="{naam}" />\n'.format(naam= j.naam))
             F.write('  </wedstr>\n')
         for speler, wedstr in self.onmogelijk:
-            F.write('  <onmogelijk juryName="{naam}" wedstrId="{id}">\n'.format(naam=speler.naam, id=wedstr.matchId))
+            F.write('  <onmogelijk juryName="{naam}" wedstrId="{id}" />\n'.format(naam=speler.naam, id=wedstr.matchId))
         for speler, cnt in self.wCount.iteritems():
-            F.write('  <wcount juryName="{naam}" count="{cnt}">\n'.format(naam=speler.naam, cnt=cnt))
+            F.write('  <wcount juryName="{naam}" count="{cnt}" />\n'.format(naam=speler.naam, cnt=cnt))
         for (wedstr, speler) in self.fixedJury:
-            F.write('  <fixedJury juryName="{naam}" wedstrId="{id}">\n'.format(naam=speler.naam, id=wedstr.matchId))
+            F.write('  <fixedJury juryName="{naam}" wedstrId="{id}" />\n'.format(naam=speler.naam, id=wedstr.matchId))
         F.write('</state>\n')
         F.close()
 
@@ -779,7 +780,8 @@ class Application:
                 self.overallBestState = bestState.clone(self.spelersMetW)
 
     def readState(self, filename):
-        self.overallBestState = State().Read(filename, self)
+        self.overallBestState = State(self.spelersMetW)
+        self.overallBestState.Read(filename, self)
 
     def writeState(self, filename):
         self.overallBestState.Write(filename)
@@ -795,8 +797,27 @@ class Application:
         self.overallBestState.printOnmogelijk()
         self.overallBestState.toHTML(wfile, self.spelersMetW, self.wedstrijden)
 
-app = Application(2013, 'data.xml', '2013-2014.csv')
-#app.readState('data/rooster.csv')
-app.generateRooster(1, 50)
-app.writeState('out/state.csv')
-app.writeResults('out/wrooter.html')
+#app = Application(2013, 'data.xml', '2013-2014.csv')
+#app.readState('out/state.csv')
+##app.generateRooster(1, 50)
+#app.writeState('out/state2.csv')
+#app.writeResults('out/wrooter.html')
+
+if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser(description="Create rooster based files for Ritola Z&PC")
+    parser.add_argument("year", type=int, help="year of the season to calcuate (2013=2013-2014)")
+    parser.add_argument("-v", "--verbose", action="store_true")
+    parser.add_argument("-o", "--openStateFile", help="File to load the state from")
+    parser.add_argument("-s", "--simulate", action="store_true", help="Run simulated annealing")
+    parser.add_argument("-g", "--imporveWRoosterSteps", type=int, help="Number of simulated annealing steps to improve the state", default=5000)
+    parser.add_argument("-r", "--improveWRoosterRuns", type=int, help="Number of simulated annealing runs", default=1)
+    parser.add_argument("-w", "--writeStateFile", help="File to write the state new file to")
+    parser.add_argument("-d", "--dirForWebdata", help="directory to write webdata to")
+    args = parser.parse_args()
+
+    seizoen = "{}-{2}".format(args.year, args.year+1)
+
+
+
+
